@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+service_account.json
+*.pem
+*.key
+
+# Local databases / state
+personal_ai.db
+*.sqlite
+*.sqlite3
+
+# Local vector indexes / generated artifacts
+faiss_indexes/
+
+# Local scratch / temp
+temp/
+tmp/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
