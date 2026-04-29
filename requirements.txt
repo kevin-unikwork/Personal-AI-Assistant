@@ -10,8 +10,8 @@ apscheduler==3.10.4
 sqlalchemy[asyncio]==2.0.31
 aiosqlite==0.20.0
 alembic==1.13.1
-pydantic==2.7.4
-pydantic-settings==2.3.3
+pydantic
+pydantic-settings
 google-auth==2.30.0
 google-auth-oauthlib==1.2.0
 google-api-python-client==2.134.0
