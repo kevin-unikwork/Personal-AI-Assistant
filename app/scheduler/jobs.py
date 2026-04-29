@@ -54,7 +54,7 @@ async def check_reminders():
             stmt = select(Task, User).join(User).where(
                 Task.status == "pending",
                 Task.due_datetime <= now + timedelta(minutes=lead_minutes)
-            )
+            ) 
             result = await session.execute(stmt)
             rows = result.all()
 
