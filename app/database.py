@@ -2,10 +2,15 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import declarative_base
 from app.config import settings
 
-# Create async engine
+# Create async engine with production-grade stability
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
+    pool_pre_ping=True,  # Verifies connection before use
+    pool_recycle=300,    # Prevents stale connections
+    connect_args={
+        "command_timeout": 60,
+    }
 )
 
 # Async session maker

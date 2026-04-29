@@ -13,9 +13,13 @@ async def lifespan(app: FastAPI):
     scheduler.start()
     logger.info("Scheduler started.")
 
-    # Create tables if they don't exist (useful for dev without alembic)
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Create tables if they don't exist (Safeguarded for Production)
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        logger.info("Database structure verified.")
+    except Exception as e:
+        logger.warning(f"Database pre-check skipped or failed: {e}. If tables exist, the app will continue.")
 
     yield
 
