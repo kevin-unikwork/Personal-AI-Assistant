@@ -44,6 +44,10 @@ async def health_check():
         except Exception as se:
             diag["socket_error"] = str(se)
 
+        # 4. List Env Keys (Debugging only)
+        import os
+        diag["env_keys_found"] = sorted(list(os.environ.keys()))
+
         # 3. Test SQLAlchemy
         async with async_session() as session:
             await session.execute(text("SELECT 1"))
