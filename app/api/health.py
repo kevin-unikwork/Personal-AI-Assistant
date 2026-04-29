@@ -14,12 +14,15 @@ async def health_check():
     try:
         # Extract host and port for diagnostics
         from urllib.parse import urlparse
-        # Handle asyncpg prefix
+        # Handle asyncpg prefix for parsing
         raw_url = settings.database_url.replace("postgresql+asyncpg://", "http://")
         parsed = urlparse(raw_url)
         host = parsed.hostname
         port = parsed.port or 5432
         
+        # Create a sanitized version (no password) to show in health check
+        safe_url = f"postgresql+asyncpg://{parsed.username}:****@{host}:{port}{parsed.path}"
+        diag["effective_url"] = safe_url
         diag["target_host"] = host
         diag["target_port"] = port
         
