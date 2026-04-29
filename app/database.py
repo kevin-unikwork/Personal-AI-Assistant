@@ -12,7 +12,6 @@ engine = create_async_engine(
     pool_recycle=300,
     connect_args={
         "command_timeout": 60,
-        "family": socket.AF_INET,
         "server_settings": {
             "tcp_user_timeout": "60000",
         }
