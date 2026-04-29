@@ -1,6 +1,6 @@
 import contextlib
 from fastapi import FastAPI
-from app.api import webhook, health
+from app.api import webhook, health, debug
 from app.scheduler.jobs import scheduler, setup_scheduler
 from app.database import engine, Base
 import app.models  # noqa: F401 - ensure model metadata is registered before create_all
@@ -37,6 +37,7 @@ app = FastAPI(
 # Include routers
 app.include_router(webhook.router)
 app.include_router(health.router)
+app.include_router(debug.router)
 
 if __name__ == "__main__":
     import uvicorn
