@@ -2,14 +2,20 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import declarative_base
 from app.config import settings
 
-# Create async engine with production-grade stability
+import socket
+
+# Create async engine with production-grade stability and IPv4 forcing
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
-    pool_pre_ping=True,  # Verifies connection before use
-    pool_recycle=300,    # Prevents stale connections
+    pool_pre_ping=True,
+    pool_recycle=300,
     connect_args={
         "command_timeout": 60,
+        "family": socket.AF_INET,
+        "server_settings": {
+            "tcp_user_timeout": "60000",
+        }
     }
 )
 
