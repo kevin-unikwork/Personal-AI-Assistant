@@ -4,15 +4,17 @@ from app.config import settings
 
 import socket
 
-# Create async engine with production-grade stability and IPv4 forcing
+# Create async engine with High-Availability pooler settings
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
-    pool_pre_ping=True,  # Mandatory for cloud resilience
+    pool_size=5,         # Balanced for Supabase free tier
+    max_overflow=10,     # Allows temporary bursts
+    pool_pre_ping=True,
     pool_recycle=300,
     connect_args={
         "command_timeout": 60,
-        "timeout": 10,  # Wait up to 10 seconds for the initial connection
+        "timeout": 30,   # Increased to 30s for cloud handshake
         "ssl": "require",
         "server_settings": {
             "tcp_user_timeout": "60000",
