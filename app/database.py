@@ -12,6 +12,7 @@ engine = create_async_engine(
     pool_recycle=300,
     connect_args={
         "command_timeout": 60,
+        "ssl": "require",  # Mandatory for Supabase direct connections in the cloud
         "server_settings": {
             "tcp_user_timeout": "60000",
         }
