@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from app.database import async_session
+from app.config import settings
 from sqlalchemy import text
 
 router = APIRouter()
