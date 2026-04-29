@@ -8,11 +8,12 @@ import socket
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
-    pool_pre_ping=True,
+    pool_pre_ping=True,  # Mandatory for cloud resilience
     pool_recycle=300,
     connect_args={
         "command_timeout": 60,
-        "ssl": "require",  # Mandatory for Supabase direct connections in the cloud
+        "timeout": 10,  # Wait up to 10 seconds for the initial connection
+        "ssl": "require",
         "server_settings": {
             "tcp_user_timeout": "60000",
         }
