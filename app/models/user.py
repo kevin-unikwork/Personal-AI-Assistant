@@ -10,6 +10,7 @@ class User(Base):
     phone_number = Column(String, unique=True, index=True, nullable=False)
     name = Column(String, nullable=True)
     timezone = Column(String, default="Asia/Kolkata", nullable=False)
+    location = Column(String, default="Surat", nullable=False)
     preferences = Column(JSON, default=dict, nullable=False)
     google_token = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

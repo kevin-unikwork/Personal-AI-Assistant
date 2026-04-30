@@ -59,7 +59,7 @@ async def get_daily_briefing(phone_number: str) -> str:
 
         # 4. Fetch Intel (Weather/News)
         try:
-            intel_str = await get_morning_intel.ainvoke({"location": "Surat"})
+            intel_str = await get_morning_intel.ainvoke({"location": user.location})
         except Exception:
             intel_str = "Weather/News currently unavailable."
 
@@ -70,7 +70,7 @@ async def get_daily_briefing(phone_number: str) -> str:
         You are the user's high-end Personal Life Operator. Create an elite morning briefing.
         
         USER CONTEXT:
-        - Location: Surat
+        - Location: {user.location}
         - Today's Date: {today_str}
         
         INTEL (Weather & news):

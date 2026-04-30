@@ -15,6 +15,7 @@ from app.tools.expense_tool import log_expense, get_expense_summary
 from app.tools.habit_tool import track_habit, get_habit_status
 from app.tools.solver_tool import solve_life_problem
 from app.tools.momentum_tool import log_daily_checkin, get_momentum_dashboard
+from app.tools.profile_tool import update_user_location
 
 # Grouped catalog makes extensions easier and keeps registrations organized.
 AGENT_TOOL_GROUPS: dict[str, list[BaseTool]] = {
@@ -28,6 +29,7 @@ AGENT_TOOL_GROUPS: dict[str, list[BaseTool]] = {
     "habits": [track_habit, get_habit_status],
     "momentum": [log_daily_checkin, get_momentum_dashboard],
     "strategy": [solve_life_problem],
+    "profile": [update_user_location],
 }
 
 # Flat list consumed by the orchestrator.

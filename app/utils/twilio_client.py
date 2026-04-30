@@ -88,6 +88,29 @@ def _build_list_picker_variable_candidates(prompt: InteractivePrompt) -> list[di
         unique.append(c)
     return unique
 
+import re
+
+def _format_whatsapp_text(text: str) -> str:
+    """Format AI output specifically for WhatsApp.
+    1. Converts **bold** to *bold*.
+    2. Ensures no spaces between asterisks and text (e.g. * Finance * -> *Finance*).
+    """
+    if not text:
+        return text
+    
+    # 1. Replace double asterisks with single
+    text = text.replace("**", "*")
+    
+    # 2. Fix spacing: convert '* Finance *' to '*Finance*'
+    # Matches '*' followed by space, some text, then space and '*'
+    text = re.sub(r'\*\s+(.*?)\s+\*', r'*\1*', text)
+    
+    # 3. Clean up any remaining leading/trailing spaces inside single asterisks
+    text = re.sub(r'\*(\s+)', '*', text)
+    text = re.sub(r'(\s+)\*', '*', text)
+    
+    return text
+
 def send_whatsapp_message(to: str, message: str) -> str:
     """
     Sends a WhatsApp message using Twilio's API.
@@ -96,10 +119,13 @@ def send_whatsapp_message(to: str, message: str) -> str:
     try:
         client = get_twilio_client()
         to = _normalize_whatsapp_to(to)
+        
+        # Apply global WhatsApp formatting
+        formatted_message = _format_whatsapp_text(message)
             
         msg = client.messages.create(
             from_=settings.twilio_whatsapp_from,
-            body=message,
+            body=formatted_message,
             to=to
         )
         logger.info("Sent WhatsApp message", extra={"sid": msg.sid, "to": to})
