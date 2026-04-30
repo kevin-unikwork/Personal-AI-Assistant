@@ -4,7 +4,7 @@ from app.config import settings
 from app.utils.logger import logger
 
 @tool
-def get_morning_intel(location: str = "Surat") -> str:
+async def get_morning_intel(location: str = "Surat") -> str:
     """Fetch real-time weather, top news, and market context for the morning briefing.
     
     Args:
@@ -26,8 +26,8 @@ def get_morning_intel(location: str = "Surat") -> str:
             "max_results": 3
         }
 
-        with httpx.Client(timeout=15.0) as client:
-            response = client.post(url, json=payload)
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            response = await client.post(url, json=payload)
 
         if response.status_code != 200:
             return f"Intel failure: {response.status_code}"
