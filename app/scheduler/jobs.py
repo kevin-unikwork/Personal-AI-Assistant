@@ -1,4 +1,4 @@
-﻿from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from sqlalchemy import select
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -141,7 +141,8 @@ def setup_scheduler():
         id="global_daily_briefing",
         replace_existing=True,
         hour=settings.daily_briefing_hour,
-        minute=settings.daily_briefing_minute
+        minute=settings.daily_briefing_minute,
+        timezone="Asia/Kolkata"
     )
 
     scheduler.add_job(
@@ -150,5 +151,6 @@ def setup_scheduler():
         id="send_evening_checkin_nudges",
         replace_existing=True,
         hour=settings.evening_checkin_hour,
-        minute=settings.evening_checkin_minute
+        minute=settings.evening_checkin_minute,
+        timezone="Asia/Kolkata"
     )
